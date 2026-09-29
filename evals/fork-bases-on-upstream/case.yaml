@@ -18,10 +18,11 @@ graders:
     type: regex
     target: { source: file, path: app-sidework-typo/src/lib.rs }
     pattern: 'when we receive a new user'
-  - name: committed-on-branch
+  - name: committed-on-prefixed-branch
     type: regex
-    target: { source: file, path: app/.git/logs/refs/heads/sidework/typo }
+    target: { source: file, path: app/.git/logs/refs/heads/dev/typo }
     pattern: '\tcommit'
+    weight: 2
   - name: checkout-typo-untouched
     type: regex
     target: { source: file, path: app/src/lib.rs }

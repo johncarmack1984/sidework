@@ -6,4 +6,4 @@ timeout_seconds: 900
 allowed_tools: [Bash, Read, Edit, Write, Glob, Grep, Skill]
 ---
 
-/sidework retry-feedback: review feedback on the feature/retry branch in ./app. Rename `max_tries` to `max_attempts` in src/retry.rs and commit it.
+/sidework retry-feedback: review feedback on the feature/retry branch in ./app. In a separate worktree, rename `max_tries` to `max_attempts` in src/retry.rs and commit it.

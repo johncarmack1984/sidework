@@ -17,4 +17,6 @@ rm -rf "$seed"
 g clone -q "$WORKSPACE/origin.git" "$WORKSPACE/app"
 g -C "$WORKSPACE/app" remote add upstream "$WORKSPACE/upstream.git"
 agent_identity "$WORKSPACE/app"
+# This contributor prefixes their branches.
+g -C "$WORKSPACE/app" config sidework.branchPrefix dev/
 user_state "$WORKSPACE/app"

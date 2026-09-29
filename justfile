@@ -16,9 +16,9 @@ lint:
 eval *args:
     claude plugin eval . --scaffold --allow-tools Bash Edit Write {{args}}
 
-# Run the trigger cases only, which get no shell.
-eval-triggers *args:
-    claude plugin eval . --scaffold --tag trigger {{args}}
+# Run the invocation cases only, which get no shell.
+eval-invocation *args:
+    claude plugin eval . --scaffold --tag invocation {{args}}
 
 # Reproduce the nested-worktree failures the README lists.
 lab:

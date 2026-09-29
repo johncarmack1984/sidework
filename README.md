@@ -46,7 +46,7 @@ ln -s "$PWD/sidework/skills/sidework" ~/.claude/skills/sidework
 /sidework 8412-feedback: address the review comments on #8412
 ```
 
-A leading `<name>:` names the session; otherwise it's named for the task. Plain requests work too ("do this in a worktree", "take care of this on the side"): Claude loads the skill instead of making a nested worktree.
+A leading `<name>:` names the session; otherwise it's named for the task. sidework runs only when you type `/sidework`: Claude never loads it on its own, so installing it doesn't change how Claude handles any other request for a worktree.
 
 Each session:
 
@@ -70,12 +70,12 @@ It never changes the checkout's files or branch, never stashes (the stash list i
 
 `evals/` is a [`claude plugin eval`](https://code.claude.com/docs/en/plugin-evals) suite. Each case builds a fixture repo with a scaffold script, runs Claude on a task with and without the plugin, and grades what's left on disk.
 
-- **Behavior** (with a shell): a plain-language worktree request in a Rust and just repo with uncommitted work; a fork whose `origin/main` is stale; a repo with no remote, checked out on a WIP branch; a worktree another session already owns; review feedback on an existing branch. Graders check where the worktree landed, which base it started from, that the change was committed on the right branch, and that the checkout's files, branch, and stash are unchanged and nothing was pushed. An LLM judge reads the trace for the rest.
-- **Trigger** (no shell): the skill loads for "spin up a worktree" and "do this on the side", and stays out of a question about worktrees and a plain branch request.
+- **Behavior** (with a shell): a task in a Rust and just repo with uncommitted work; a fork whose `origin/main` is stale, with a branch prefix set in its git config; a repo with no remote, checked out on a WIP branch; a worktree another session already owns; review feedback on an existing branch. Each prompt invokes `/sidework` and asks for a separate worktree, so the run without the plugin gets the same request. Graders check where the worktree landed, which base it started from, that the change was committed on the right branch, and that the checkout's files, branch, and stash are unchanged and nothing was pushed. An LLM judge reads the trace for the rest.
+- **Invocation** (no shell): plain requests like "spin up a worktree" and "do this on the side" don't load the skill, and `/sidework` does.
 
 ```sh
-just eval            # the whole suite; runs each case's scaffold as you
-just eval-triggers   # the trigger cases only
+just eval              # the whole suite; runs each case's scaffold as you
+just eval-invocation   # the invocation cases only
 ```
 
 Cases that grant a shell run under Claude Code's sandbox (macOS, or Linux with `bubblewrap` and `socat`), and the harness refuses them on a machine whose cloud credential config it can't wall off, an AWS `credential_process` for one. The `evals` workflow runs the suite in GitHub Actions on demand; it needs an `ANTHROPIC_API_KEY` repository secret.

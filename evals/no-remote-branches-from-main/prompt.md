@@ -6,4 +6,4 @@ timeout_seconds: 900
 allowed_tools: [Bash, Read, Edit, Write, Glob, Grep, Skill]
 ---
 
-./app is a local-only repo with no remote, and I'm in the middle of something on its wip branch. In a separate worktree, add a `fmt` recipe to the justfile that runs `cargo fmt --all`, and commit it. Name the session fmt-recipe.
+/sidework fmt-recipe: ./app is a local-only repo with no remote, and I'm in the middle of something on its wip branch. In a separate worktree, add a `fmt` recipe to the justfile that runs `cargo fmt --all`, and commit it.

@@ -1,6 +1,6 @@
 ---
-description: Asking for work on the side, away from the current checkout, should load the skill.
-tags: [trigger]
+description: Asking for work on the side in plain words must not load the skill; it runs only when invoked with /sidework.
+tags: [invocation]
 max_turns: 5
 allowed_tools: [Skill, Read, Glob, Grep]
 ---

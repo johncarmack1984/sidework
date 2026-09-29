@@ -1,6 +1,6 @@
 ---
-description: Asking for a worktree by name should load the skill instead of a nested worktree.
-tags: [trigger]
+description: Asking for a worktree in plain words must not load the skill; it runs only when invoked with /sidework.
+tags: [invocation]
 max_turns: 5
 allowed_tools: [Skill, Read, Glob, Grep]
 ---

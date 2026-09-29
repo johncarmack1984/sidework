@@ -1,7 +1,8 @@
 ---
 name: sidework
-description: Runs a task in its own git worktree placed beside the main checkout (../<repo>-sidework-<session>) instead of nested inside the repository, and leaves the main checkout untouched. Use when the user runs /sidework, asks for work to happen in a worktree or on the side, or wants a second session in a repo without disturbing the first. Prefer it to EnterWorktree, `claude --worktree`, and worktree-isolated subagents, which nest worktrees inside the repository under .claude/worktrees/.
+description: Run a task in its own git worktree beside the main checkout (../<repo>-sidework-<session>), not nested inside the repository, and leave the main checkout untouched.
 argument-hint: "[<name>:] <task>"
+disable-model-invocation: true
 ---
 
 # Sidework
@@ -26,7 +27,7 @@ A sibling sits at the same depth as the main checkout, so relative paths (`path 
    - The path exists but is not a worktree of this repository: choose another name.
 5. **Choose the branch and base.**
    - Work on an existing branch or pull request: check out that branch in the worktree instead of creating one (for a GitHub PR, add the worktree with `--detach` and run `gh pr checkout <number>` inside it), then fast-forward it to its remote.
-   - Anything else gets a new branch `<prefix><session>`. The prefix is `git config sidework.branchPrefix` when set (for example `me/`), else the notes' convention, else `sidework/`. Run `git fetch`, then base the branch on the default branch of `upstream` when that remote exists (origin is then a fork), else of `origin`, else the local default branch when there is no remote. `git symbolic-ref --short refs/remotes/<remote>/HEAD` names a remote's default branch; run `git remote set-head <remote> --auto` if it's unset.
+   - Anything else gets a new branch `<prefix><session>`. Read the prefix with `echo "prefix: $(git -C <main> config --get sidework.branchPrefix)"`; when that prints nothing after the colon, use the notes' convention, else `sidework/`. Run `git fetch`, then base the branch on the default branch of `upstream` when that remote exists (origin is then a fork), else of `origin`, else the local default branch when there is no remote. `git symbolic-ref --short refs/remotes/<remote>/HEAD` names a remote's default branch; run `git remote set-head <remote> --auto` if it's unset.
    - Never start from the main checkout's current HEAD or its uncommitted changes. If the task needs that work, say so and ask.
 6. **Create the worktree**: `git -C <main> worktree add -b <branch> <path> <base>`, or `git -C <main> worktree add <path> <branch>` for an existing branch.
 7. **Set it up.**

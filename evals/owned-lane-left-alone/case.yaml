@@ -15,6 +15,15 @@ graders:
     flags: m
     match: "count:1"
     weight: 2
+  - name: no-duplicate-lane
+    type: file_exists
+    path: "*/justfile"
+    exists: false
+    weight: 2
+  - name: reports-the-overlap
+    type: regex
+    pattern: 'app-sidework-lint-recipe(?![\w-])'
+    weight: 2
   - name: checkout-justfile-untouched
     type: regex
     target: { source: file, path: app/justfile }
