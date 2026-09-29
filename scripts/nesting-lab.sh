@@ -48,11 +48,16 @@ done
 row() { printf '%-36s %-34s %s\n' "$1" "$2" "$3"; }
 
 path_dep() {
-  (cd "$1" && cargo metadata -q --offline --format-version 1 >/dev/null 2>&1) && echo "resolves" || echo "fails: ../shared not found"
+  if (cd "$1" && cargo metadata -q --offline --format-version 1 >/dev/null 2>&1); then
+    echo "resolves"
+  else
+    echo "fails: ../shared not found"
+  fi
 }
 rustflags() {
-  local flags
-  flags="$(cd "$1" && cargo build -v --offline 2>&1 | grep -o -- '--cfg from_[a-z]*' | sort -u | sed 's/--cfg //' | paste -sd, - || true)"
+  local log flags
+  log="$(cd "$1" && cargo build -v --offline 2>&1)" || true
+  flags="$(grep -o -- '--cfg from_[a-z]*' <<<"$log" | sort -u | sed 's/--cfg //' | paste -sd, - || true)"
   echo "${flags:-build failed}"
 }
 fallback() {
