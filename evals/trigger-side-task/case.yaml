@@ -1,0 +1,11 @@
+schema_version: "1.1"
+name: trigger-side-task
+context:
+  scaffold_script: scaffold.sh
+graders:
+  - name: loads-sidework
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?sidework"'
+    min: 1
+    arm: both
