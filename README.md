@@ -1,5 +1,14 @@
 # sidework
 
+> sidework has moved to [johncarmack1984/repertoire](https://github.com/johncarmack1984/repertoire), the marketplace for all my plugins. Install it there to get updates:
+>
+> ```
+> /plugin marketplace add johncarmack1984/repertoire
+> /plugin install sidework@repertoire
+> ```
+>
+> This repo is archived and won't change.
+
 Run Claude Code tasks in git worktrees beside your checkout, not inside it.
 
 Claude Code's own worktrees (`claude --worktree`, the `EnterWorktree` tool, subagents with `isolation: "worktree"`) go in `.claude/worktrees/<name>/`, inside the repository. sidework is a skill that puts each task's worktree next to the checkout instead, on its own branch, and leaves the checkout alone:
